@@ -34,7 +34,38 @@ sport = st.selectbox("Select Your Sport", [
     "Soccer", "Softball", "Spirit", "Swimming & Diving", "Tennis", "Track & Field", "Volleyball",
     "Water Polo", "Wrestling"
 ])
-position = st.text_input("Primary Position")
+
+positions_dict = {
+    "Basketball": ["Point Guard", "Shooting Guard", "Small Forward", "Power Forward", "Center"],
+    "Football": ["Quarterback", "Running Back", "Wide Receiver", "Tight End", "Offensive Line", "Defensive Line", "Linebacker", "Cornerback", "Safety", "Kicker"],
+    "Girls Flag Football": ["Quarterback", "Running Back", "Wide Receiver", "Center", "Cornerback", "Safety", "Rusher"],
+    "Baseball": ["Pitcher", "Catcher", "First Base", "Second Base", "Shortstop", "Third Base", "Outfield"],
+    "Softball": ["Pitcher", "Catcher", "First Base", "Second Base", "Shortstop", "Third Base", "Outfield"],
+    "Soccer": ["Goalkeeper", "Defender", "Midfielder", "Forward"],
+    "Volleyball": ["Outside Hitter", "Middle Blocker", "Setter", "Libero", "Opposite Hitter"],
+    "Lacrosse": ["Attack", "Midfield", "Defense", "Goalie"],
+    "Ice Hockey": ["Center", "Winger", "Defenseman", "Goalie"],
+    "Esports": ["Support", "Tank", "DPS", "In-Game Leader", "Sniper", "Flex", "Other"],
+    "Track & Field": ["Sprinter", "Distance", "Thrower", "Jumper", "Relay"],
+    "Cross Country": ["Runner"],
+    "Swimming & Diving": ["Freestyle", "Backstroke", "Breaststroke", "Butterfly", "Diver"],
+    "Tennis": ["Singles", "Doubles"],
+    "Golf": ["Individual", "Team"],
+    "Cheer": ["Flyer", "Base", "Back Spot", "Tumbler"],
+    "Field Hockey": ["Forward", "Midfield", "Defense", "Goalie"],
+    "Bowling": ["Starter", "Alternate"],
+    "Gymnastics": ["Vault", "Bars", "Beam", "Floor"],
+    "Rifle": ["Standing", "Prone", "Kneeling"],
+    "Spirit": ["Cheer", "Dance"],
+    "Water Polo": ["Goalie", "Center", "Wing", "Driver", "Point"],
+    "Wrestling": ["Lightweight", "Middleweight", "Heavyweight"]
+}
+
+if sport in positions_dict:
+    position = st.selectbox("Primary Position", positions_dict[sport])
+else:
+    position = st.text_input("Primary Position")
+
 graduation_year = st.selectbox("Graduation Year", [2025, 2026, 2027, 2028])
 gpa = st.slider("Current GPA (estimate)", 1.0, 4.0, 3.0, 0.1)
 
