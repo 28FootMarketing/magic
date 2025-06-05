@@ -30,8 +30,9 @@ status = st.radio("Select your current recruiting stage:", [
 st.header("Step 2: Help Me Match You")
 sport = st.selectbox("Select Your Sport", [
     "Baseball", "Basketball", "Bowling", "Cheer", "Cross Country", "Esports", "Field Hockey",
-    "Football", "Golf", "Gymnastics", "Ice Hockey", "Lacrosse", "Rifle", "Soccer", "Softball",
-    "Spirit", "Swimming & Diving", "Tennis", "Track & Field", "Volleyball", "Water Polo", "Wrestling"
+    "Football", "Girls Flag Football", "Golf", "Gymnastics", "Ice Hockey", "Lacrosse", "Rifle",
+    "Soccer", "Softball", "Spirit", "Swimming & Diving", "Tennis", "Track & Field", "Volleyball",
+    "Water Polo", "Wrestling"
 ])
 position = st.text_input("Primary Position")
 graduation_year = st.selectbox("Graduation Year", [2025, 2026, 2027, 2028])
@@ -46,7 +47,7 @@ if sport == "Basketball":
     apg = st.number_input("Assists Per Game", 0.0, 15.0, step=0.1)
     rpg = st.number_input("Rebounds Per Game", 0.0, 20.0, step=0.1)
     match_score += ppg + apg + rpg
-elif sport == "Football":
+elif sport == "Football" or sport == "Girls Flag Football":
     dash_40 = st.number_input("40-Yard Dash (seconds)", 3.5, 6.0, step=0.01)
     tackles = st.number_input("Total Tackles", 0, 200)
     passing_yards = st.number_input("Passing Yards (QB only)", 0, 5000)
