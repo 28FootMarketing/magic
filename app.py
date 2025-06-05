@@ -60,7 +60,7 @@ sport = st.selectbox("Select Your Sport", list(sports_positions_stats.keys()))
 position = st.selectbox("Select Your Position", sports_positions_stats[sport]["positions"])
 
 st.header("Step 3: Enter Your Performance Stats")
-user_stats = {}
+user_stats = {7}
 match_score = 0
 
 for stat in sports_positions_stats[sport]["stats"]:
