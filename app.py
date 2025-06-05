@@ -1,9 +1,7 @@
 import streamlit as st
 
-# Page configuration
 st.set_page_config(page_title="Magic Bot - Opportunity Connector", page_icon="🔗", layout="centered")
 
-# Title and Overview
 st.title("🔗 Magic Bot: The Visionary")
 st.subheader("Your Opportunity Connector")
 
@@ -16,7 +14,6 @@ He helps you identify the best fit, stay visible, and connect at the right time.
 > “Magic sees what’s next before you do—and delivers the right opportunity with flair.”
 """)
 
-# Step 1: Recruiting Status
 st.header("Step 1: Where Are You In the Process?")
 status = st.radio("Select your current recruiting stage:", [
     "Just getting started",
@@ -26,116 +23,74 @@ status = st.radio("Select your current recruiting stage:", [
     "Receiving coach replies"
 ])
 
-# Step 2: Player Info
-st.header("Step 2: Help Me Match You")
-sport = st.selectbox("Select Your Sport", [
-    "Baseball", "Basketball", "Bowling", "Cheer", "Cross Country", "Esports", "Field Hockey",
-    "Football", "Girls Flag Football", "Golf", "Gymnastics", "Ice Hockey", "Lacrosse", "Rifle",
-    "Soccer", "Softball", "Spirit", "Swimming & Diving", "Tennis", "Track & Field", "Volleyball",
-    "Water Polo", "Wrestling"
-])
-
-positions_dict = {
-    "Basketball": ["Point Guard", "Shooting Guard", "Small Forward", "Power Forward", "Center"],
-    "Football": ["Quarterback", "Running Back", "Wide Receiver", "Tight End", "Offensive Line", "Defensive Line", "Linebacker", "Cornerback", "Safety", "Kicker"],
-    "Girls Flag Football": ["Quarterback", "Running Back", "Wide Receiver", "Center", "Cornerback", "Safety", "Rusher"],
-    "Baseball": ["Pitcher", "Catcher", "First Base", "Second Base", "Shortstop", "Third Base", "Outfield"],
-    "Softball": ["Pitcher", "Catcher", "First Base", "Second Base", "Shortstop", "Third Base", "Outfield"],
-    "Soccer": ["Goalkeeper", "Defender", "Midfielder", "Forward"],
-    "Volleyball": ["Outside Hitter", "Middle Blocker", "Setter", "Libero", "Opposite Hitter"],
-    "Lacrosse": ["Attack", "Midfield", "Defense", "Goalie"],
-    "Ice Hockey": ["Center", "Winger", "Defenseman", "Goalie"],
-    "Esports": ["Support", "Tank", "DPS", "In-Game Leader", "Sniper", "Flex", "Other"],
-    "Track & Field": ["Sprinter", "Distance", "Thrower", "Jumper", "Relay"],
-    "Cross Country": ["Runner"],
-    "Swimming & Diving": ["Freestyle", "Backstroke", "Breaststroke", "Butterfly", "Diver"],
-    "Tennis": ["Singles", "Doubles"],
-    "Golf": ["Individual", "Team"],
-    "Cheer": ["Flyer", "Base", "Back Spot", "Tumbler"],
-    "Field Hockey": ["Forward", "Midfield", "Defense", "Goalie"],
-    "Bowling": ["Starter", "Alternate"],
-    "Gymnastics": ["Vault", "Bars", "Beam", "Floor"],
-    "Rifle": ["Standing", "Prone", "Kneeling"],
-    "Spirit": ["Cheer", "Dance"],
-    "Water Polo": ["Goalie", "Center", "Wing", "Driver", "Point"],
-    "Wrestling": ["Lightweight", "Middleweight", "Heavyweight"]
+sports_positions_stats = {
+    "Basketball": {
+        "positions": ["Point Guard", "Shooting Guard", "Small Forward", "Power Forward", "Center"],
+        "stats": ["Points Per Game", "Assists", "Rebounds", "Steals", "Blocks"]
+    },
+    "Football": {
+        "positions": ["Quarterback", "Running Back", "Wide Receiver", "Linebacker", "Defensive Back"],
+        "stats": ["Passing Yards", "Rushing Yards", "Receptions", "Tackles", "Interceptions"]
+    },
+    "Girls Flag Football": {
+        "positions": ["Quarterback", "Running Back", "Receiver", "Safety", "Linebacker"],
+        "stats": ["Completions", "Yards Thrown", "Touchdowns", "Flag Pulls", "Interceptions"]
+    },
+    "Soccer": {
+        "positions": ["Goalkeeper", "Defender", "Midfielder", "Forward"],
+        "stats": ["Goals", "Assists", "Pass Accuracy", "Tackles", "Saves"]
+    },
+    "Baseball": {
+        "positions": ["Pitcher", "Catcher", "Infielder", "Outfielder"],
+        "stats": ["Batting Average", "Home Runs", "RBIs", "Stolen Bases", "ERA"]
+    },
+    "Track & Field": {
+        "positions": ["Sprinter", "Distance Runner", "Jumper", "Thrower"],
+        "stats": ["100m Time", "200m Time", "Long Jump", "Shot Put", "Discus"]
+    },
+    "Esports": {
+        "positions": ["FPS Player", "MOBA Player", "Strategist", "Support"],
+        "stats": ["K/D Ratio", "Win Rate", "Avg Score", "Headshot %", "Hours Played"]
+    }
 }
 
-if sport in positions_dict:
-    position = st.selectbox("Primary Position", positions_dict[sport])
-else:
-    position = st.text_input("Primary Position")
+st.header("Step 2: Choose Your Sport")
+sport = st.selectbox("Select Your Sport", list(sports_positions_stats.keys()))
 
-graduation_year = st.selectbox("Graduation Year", [2025, 2026, 2027, 2028])
-gpa = st.slider("Current GPA (estimate)", 1.0, 4.0, 3.0, 0.1)
+position = st.selectbox("Select Your Position", sports_positions_stats[sport]["positions"])
 
-# Step 3: Sport-Specific Stats
-st.header("Step 3: Your Performance Stats")
+st.header("Step 3: Enter Your Performance Stats")
+user_stats = {}
 match_score = 0
 
-if sport == "Basketball":
-    ppg = st.number_input("Points Per Game", 0.0, 50.0, step=0.1)
-    apg = st.number_input("Assists Per Game", 0.0, 15.0, step=0.1)
-    rpg = st.number_input("Rebounds Per Game", 0.0, 20.0, step=0.1)
-    match_score += ppg + apg + rpg
-elif sport == "Football" or sport == "Girls Flag Football":
-    dash_40 = st.number_input("40-Yard Dash (seconds)", 3.5, 6.0, step=0.01)
-    tackles = st.number_input("Total Tackles", 0, 200)
-    passing_yards = st.number_input("Passing Yards (QB only)", 0, 5000)
-    match_score += (200 - dash_40 * 30) + tackles + passing_yards / 100
-elif sport == "Soccer":
-    goals = st.number_input("Goals Scored", 0, 100)
-    assists = st.number_input("Assists", 0, 100)
-    minutes = st.number_input("Minutes Played", 0, 5000)
-    match_score += goals + assists + minutes / 100
-elif sport == "Baseball":
-    avg = st.number_input("Batting Average", 0.0, 1.0, step=0.001)
-    home_runs = st.number_input("Home Runs", 0, 100)
-    rbi = st.number_input("RBIs", 0, 200)
-    match_score += avg * 100 + home_runs + rbi
-elif sport == "Track & Field":
-    sprint_100m = st.number_input("100m Dash Time (seconds)", 9.0, 20.0, step=0.01)
-    sprint_200m = st.number_input("200m Dash Time (seconds)", 18.0, 40.0, step=0.01)
-    match_score += (40 - sprint_100m) + (40 - sprint_200m)
-elif sport == "Esports":
-    game = st.text_input("Primary Game (e.g., Fortnite, Valorant, Rocket League)")
-    rank = st.text_input("Rank or Tier (e.g., Gold, Diamond, Top 1%):")
-    hours = st.number_input("Hours Played (total)", 0, 10000)
-    win_rate = st.slider("Win Rate (%)", 0, 100, 50)
-    match_score += win_rate + hours / 100
-else:
-    st.info("Your sport is supported. Fill in general performance notes.")
+for stat in sports_positions_stats[sport]["stats"]:
+    value = st.number_input(f"{stat}", value=0.0)
+    user_stats[stat] = value
+    match_score += value if isinstance(value, (int, float)) else 0
 
-# Step 4: School Preferences
-st.header("Step 4: What Type of School Interests You Most?")
-level = st.selectbox("Choose one:", ["NCAA D1", "NCAA D2", "NCAA D3", "NAIA", "JUCO", "Undecided"])
-region = st.multiselect("Preferred Region(s):", ["East Coast", "West Coast", "South", "Midwest", "Anywhere"]) 
+st.header("Step 4: Academic and Personal Info")
+graduation_year = st.selectbox("Graduation Year", [2025, 2026, 2027, 2028])
+gpa = st.slider("GPA (Estimate)", 1.0, 4.0, 3.0, 0.1)
 
-# Step 5: Top 3 Opportunity Matches (Demo Static Output)
-st.header("Step 5: Top 3 Demo College Matches")
-st.markdown("""
-1. **Southern State University** – JUCO, Strong Fit, High Playing Time Potential  
-2. **Northbridge College** – NCAA D3, Academic-Athletic Balance, Coach Openings  
-3. **Coastal Tech** – NCAA D2, Interested in athletes from your position
-""")
+st.header("Step 5: School Preferences")
+level = st.selectbox("Target Level", ["NCAA D1", "NCAA D2", "NCAA D3", "NAIA", "JUCO", "Undecided"])
+region = st.multiselect("Preferred Region(s):", ["East Coast", "West Coast", "South", "Midwest", "Anywhere"])
 
-# Step 6: Delivery
-st.header("Step 6: Where Should We Send Updates?")
-delivery_method = st.selectbox("Delivery Method:", ["Email", "SMS", "Just in this app"])
+st.header("Step 6: Delivery Option")
+delivery_method = st.selectbox("Delivery Method:", ["Email", "SMS", "In-App Only"])
 contact_info = st.text_input(f"Enter your {delivery_method}:")
 
-# Summary Output
-if st.button("Submit and View Opportunities"):
-    st.success("✅ Opportunity Report Generated")
+if st.button("Submit and Get My Matches"):
+    st.success("✅ Your opportunity profile has been generated!")
     st.markdown(f"""
-    **Status:** {status}  
-    **Sport/Position:** {sport} / {position}  
-    **Grad Year:** {graduation_year}  
+    **Sport/Position:** {sport} - {position}  
+    **Stats Summary:** {user_stats}  
+    **Graduation Year:** {graduation_year}  
     **GPA:** {gpa}  
-    **Interest Level:** {level}  
-    **Region:** {', '.join(region) if region else 'Any'}  
-    **Match Strength Score:** {round(match_score, 2)}  
-    **Delivery Method:** {delivery_method} → {contact_info}
+    **Target Level:** {level}  
+    **Region Preference:** {', '.join(region)}  
+    **Delivery:** {delivery_method} → {contact_info}  
+    **Match Strength Score:** {round(match_score, 2)}
     """)
-    st.info("Magic says: The right match can change everything. Let’s keep you visible.")
+    st.info("Magic says: When preparation meets opportunity, success is born. Let's get visible.")
     st.balloons()
