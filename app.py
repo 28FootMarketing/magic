@@ -28,7 +28,11 @@ status = st.radio("Select your current recruiting stage:", [
 
 # Step 2: Player Info
 st.header("Step 2: Help Me Match You")
-sport = st.text_input("Primary Sport")
+sport = st.selectbox("Select Your Sport", [
+    "Baseball", "Basketball", "Bowling", "Cheer", "Cross Country", "Esports", "Field Hockey",
+    "Football", "Golf", "Gymnastics", "Ice Hockey", "Lacrosse", "Rifle", "Soccer", "Softball",
+    "Spirit", "Swimming & Diving", "Tennis", "Track & Field", "Volleyball", "Water Polo", "Wrestling"
+])
 position = st.text_input("Primary Position")
 graduation_year = st.selectbox("Graduation Year", [2025, 2026, 2027, 2028])
 gpa = st.slider("Current GPA (estimate)", 1.0, 4.0, 3.0, 0.1)
@@ -37,38 +41,38 @@ gpa = st.slider("Current GPA (estimate)", 1.0, 4.0, 3.0, 0.1)
 st.header("Step 3: Your Performance Stats")
 match_score = 0
 
-if sport.lower() == "basketball":
+if sport == "Basketball":
     ppg = st.number_input("Points Per Game", 0.0, 50.0, step=0.1)
     apg = st.number_input("Assists Per Game", 0.0, 15.0, step=0.1)
     rpg = st.number_input("Rebounds Per Game", 0.0, 20.0, step=0.1)
     match_score += ppg + apg + rpg
-elif sport.lower() == "football":
+elif sport == "Football":
     dash_40 = st.number_input("40-Yard Dash (seconds)", 3.5, 6.0, step=0.01)
     tackles = st.number_input("Total Tackles", 0, 200)
     passing_yards = st.number_input("Passing Yards (QB only)", 0, 5000)
     match_score += (200 - dash_40 * 30) + tackles + passing_yards / 100
-elif sport.lower() == "soccer":
+elif sport == "Soccer":
     goals = st.number_input("Goals Scored", 0, 100)
     assists = st.number_input("Assists", 0, 100)
     minutes = st.number_input("Minutes Played", 0, 5000)
     match_score += goals + assists + minutes / 100
-elif sport.lower() == "baseball":
+elif sport == "Baseball":
     avg = st.number_input("Batting Average", 0.0, 1.0, step=0.001)
     home_runs = st.number_input("Home Runs", 0, 100)
     rbi = st.number_input("RBIs", 0, 200)
     match_score += avg * 100 + home_runs + rbi
-elif sport.lower() == "track":
+elif sport == "Track & Field":
     sprint_100m = st.number_input("100m Dash Time (seconds)", 9.0, 20.0, step=0.01)
     sprint_200m = st.number_input("200m Dash Time (seconds)", 18.0, 40.0, step=0.01)
     match_score += (40 - sprint_100m) + (40 - sprint_200m)
-elif sport.lower() == "esports":
+elif sport == "Esports":
     game = st.text_input("Primary Game (e.g., Fortnite, Valorant, Rocket League)")
     rank = st.text_input("Rank or Tier (e.g., Gold, Diamond, Top 1%):")
     hours = st.number_input("Hours Played (total)", 0, 10000)
     win_rate = st.slider("Win Rate (%)", 0, 100, 50)
     match_score += win_rate + hours / 100
 else:
-    st.info("Enter a recognized high school sport to see tailored stats.")
+    st.info("Your sport is supported. Fill in general performance notes.")
 
 # Step 4: School Preferences
 st.header("Step 4: What Type of School Interests You Most?")
